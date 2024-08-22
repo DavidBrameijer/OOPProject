@@ -1,24 +1,30 @@
-﻿Cusing OOPProject;
+﻿using OOPProject;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 Console.WriteLine("Welcome to the Library Terminal.");
 
+Book.ListBooks();
+System.Console.WriteLine();
+System.Console.WriteLine("Please select a book you would like to check out, either by name or by author:");
 
+string userInput = Console.ReadLine();
 
-List<Book> AllBooks = new List<Book>()
+List<Book> matchedBooks = new List<Book>();
+
+//From there they can select one
+matchedBooks = Book.AllBooks.Where(b => b.Title.ToLower().Contains(userInput.ToLower())
+|| b.Author.ToLower().Contains(userInput.ToLower())).ToList();
+
+if(matchedBooks.Any())
 {
-    new Book("To Kill a Mockingbird", "Harper Lee", false, date ),
-    new Book("Pride and Prejudice", "Jane Austen", false, date ),
-    new Book("1984", "George Orwell", false, date ),
-    new Book("Jane Eyre", "Charlotte Bronte", true, date ),
-    new Book("The Great Gatsby", "F. Scott Fitzgerald", false, date ),
-    new Book("Animal Farm", "George Orwell", false, date ),
-    new Book("The Count of Monte Cristo", "Alexandre Dumas", true, date ),
-    new Book("Te Lord of the Rings", "J.R.R. Tolkien", false, date ),
-    new Book("Little Women", "Louisa May Alcott", true, date ),
-    new Book("The Hobbit", "J.R.R. Tolkien", false, date ),
-    new Book("The Picture of Dorian Gray", "Oscar Wilde", false, date ),
-    new Book("One Hundred Years of Solitude", "Gabriel Garcia Marquez", true, date ),
+    foreach (Book book in matchedBooks)
+    {
+        System.Console.WriteLine($"{book.Title}, {book.Author}");
+    }
+}
+else
+{
+    System.Console.WriteLine("No book was found with that input");
+}
 
 
-};

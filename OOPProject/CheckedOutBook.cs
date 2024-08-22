@@ -16,5 +16,10 @@ namespace OOPProject
             DueDate = _dueDate;
         }
 
+        public override string ToString()
+        {
+            return string.Format($"This book: {Title} is currently checked out, and is due: {DueDate}");
+        }
+
     }
 }
