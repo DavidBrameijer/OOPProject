@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OOPProject
 {
@@ -12,7 +13,7 @@ namespace OOPProject
         public string Title { get; set; }
         public string Author { get; set; }
         public bool Status { get; set; }
-        
+
 
         //constructor
         public Book(string _title, string _author, bool _status)
@@ -20,8 +21,9 @@ namespace OOPProject
             Title = _title;
             Author = _author;
             Status = _status;
-            
-        }
+        }   
 
     }
 }
+
+
