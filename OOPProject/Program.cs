@@ -2,10 +2,6 @@
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 Console.WriteLine("Welcome to the Library Terminal.");
-<<<<<<< HEAD
-Book.ListBooks();
-=======
-
 Book.ListBooks();
 System.Console.WriteLine();
 System.Console.WriteLine("Please select a book you would like to check out, either by name or by author:");
@@ -31,4 +27,3 @@ else
 }
 
 
->>>>>>> a77b73cb072adbf1b9d25765f39b0945bb53b4b2
