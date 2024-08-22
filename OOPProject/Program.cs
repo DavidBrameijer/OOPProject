@@ -16,10 +16,11 @@ matchedBooks = Book.AllBooks.Where(b => b.Title.ToLower().Contains(userInput.ToL
 
 if(matchedBooks.Any())
 {
-    foreach (Book book in matchedBooks)
+    for(int i =0; i < matchedBooks.Count; i++)
     {
-        System.Console.WriteLine($"{book.Title}, {book.Author}");
+        Console.WriteLine($"{i + 1} {matchedBooks[i]}");
     }
+    Console.WriteLine("Please select which number book you would like to check out.");
 }
 else
 {
