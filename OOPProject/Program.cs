@@ -1,1 +1,1 @@
-﻿
+﻿Console.WriteLine("Welcome to the Library Terminal.");
