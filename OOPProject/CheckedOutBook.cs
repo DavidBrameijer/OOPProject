@@ -18,7 +18,7 @@ namespace OOPProject
 
         public override string ToString()
         {
-            return string.Format($"This book: {Title} is currently checked out, and is due: {DueDate}");
+            return string.Format("Title: {0, -35} Author: {1, -25} Checked Out", Title, Author );
         }
 
     }
