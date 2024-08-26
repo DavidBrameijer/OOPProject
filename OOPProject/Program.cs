@@ -1,4 +1,7 @@
-﻿using OOPProject;
+﻿using System.ComponentModel.Design;
+using System.IO.Pipes;
+using System.Reflection;
+using OOPProject;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 Console.WriteLine("Welcome to the Library Terminal.");
@@ -61,8 +64,16 @@ reader.Close();
 
 do
 {
+    if (Book.AllBooks.Count == 0)
+    {
+        Console.WriteLine("The library has burned down");
+    }
+
     //ask if checking or returning
     Console.WriteLine("Would you like to return a book or check a book out? (return/check)");
+
+    
+
     //if returning{}
     string choice = Console.ReadLine().Trim().ToLower();
     if (choice == "return" || choice == "r")
@@ -250,23 +261,31 @@ static bool QuestionUser(bool answer){
         else if (choice.ToLower().Trim() == "no" || choice.ToLower().Trim() == "n")
         {
             Console.WriteLine("Thank you for using the Library Terminal.");
-            StreamWriter writer = new StreamWriter(filepath);
-            foreach(Book b in Book.AllBooks)
+            if (File.Exists(filepath) == true)
             {
-                if (b is CheckedOutBook checkedOutBook)
+                StreamWriter writer = new StreamWriter(filepath);
+                foreach (Book b in Book.AllBooks)
                 {
-                    writer.WriteLine($"{checkedOutBook.Title}|{checkedOutBook.Author}|{checkedOutBook.Status}|{checkedOutBook.DueDate}");
-                }
-                else
-                {
-                    writer.WriteLine($"{b.Title}|{b.Author}|{b.Status}");
-                }
-                
+                    if (b is CheckedOutBook checkedOutBook)
+                    {
+                        writer.WriteLine($"{checkedOutBook.Title}|{checkedOutBook.Author}|{checkedOutBook.Status}|{checkedOutBook.DueDate}");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"{b.Title}|{b.Author}|{b.Status}");
+                    }
 
+
+                }
+                writer.Close();
+                answer = false;
+                break;
+             }
+            else
+            {
+                answer = false;
+                break;
             }
-            writer.Close();
-            answer = false;
-            break;
         } 
         else if(choice.ToLower().Trim() == "julius caesar")
         {
@@ -283,6 +302,7 @@ static bool QuestionUser(bool answer){
             }
             foreach(Book b in Book.AllBooks.ToList())
             {
+                Console.WriteLine($"{b.Title} is burning");
                 Book.AllBooks.Remove(b);
             }
         }
