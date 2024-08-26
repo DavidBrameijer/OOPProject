@@ -10,8 +10,53 @@ string userInput;
 bool runProgram = true;
 List<Book> matchedBooks = new List<Book>();
 
-//matchedBooks = Book.AllBooks.Where(b => b.Title.ToLower().Contains(userInput.ToLower())
-//|| b.Author.ToLower().Contains(userInput.ToLower())).ToList();
+string filepath = "library.txt";
+
+if (File.Exists(filepath) == false)
+{
+    StreamWriter tempWriter = new StreamWriter(filepath);
+    tempWriter.WriteLine("To Kill a Mockingbird|Harper Lee|false");
+    tempWriter.WriteLine("Pride and Prejudice|Jane Austen|false");
+    tempWriter.WriteLine("1984|George Orwell|false");
+    tempWriter.WriteLine("Jane Eyre|Charlotte Bronte|false");
+    tempWriter.WriteLine("The Great Gatsby|F. Scott Fitzgerald|false");
+    tempWriter.WriteLine("Animal Farm|George Orwell|false");
+    tempWriter.WriteLine("The Count of Monte Cristo|Alexandre Dumas|false");
+    tempWriter.WriteLine("The Lord of the Rings|J.R.R. Tolkien|false");
+    tempWriter.WriteLine("Little Women|Louisa May Alcott|false");
+    tempWriter.WriteLine("The Hobbit|J.R.R. Tolkien|false");
+    tempWriter.WriteLine("The Picture of Dorian Gray|Oscar Wilde|false");
+    tempWriter.WriteLine("One Hundred Years of Solitude|Gabriel Garcia Marquez|false");
+    tempWriter.WriteLine("Charlotte's Web|E.B White|true|2024-08-26 10:10");
+    tempWriter.Close();
+}
+
+StreamReader reader = new StreamReader(filepath);
+while (true)
+{
+    string line = reader.ReadLine();
+    if (line == null)
+    {
+        break;
+    }
+    else
+    {
+        string[] parts = line.Split("|");
+        if (parts.Length == 3)
+        {
+            Book book = new Book(parts[0], parts[1], bool.Parse(parts[2]));
+            Book.AllBooks.Add(book);
+        }
+        else if (parts.Length == 4)
+        {
+           CheckedOutBook checkedOutBook = new CheckedOutBook(parts[0], parts[1], bool.Parse(parts[2]), DateTime.Parse(parts[3]));
+           Book.AllBooks.Add(checkedOutBook);
+        }
+    }
+}
+
+
+
 
 
 do
@@ -193,6 +238,7 @@ while (runProgram);
 
 
 static bool QuestionUser(bool answer){
+    string filepath = "library.txt";
     while(true){
         System.Console.WriteLine("Would you like continue using the library terminal? ");
         string choice = Console.ReadLine();
@@ -204,6 +250,21 @@ static bool QuestionUser(bool answer){
         else if (choice.ToLower().Trim() == "no" || choice.ToLower().Trim() == "n")
         {
             Console.WriteLine("Thank you for using the Library Terminal.");
+            StreamWriter writer = new StreamWriter(filepath);
+            foreach(Book b in Book.AllBooks)
+            {
+                if (b is CheckedOutBook checkedOutBook)
+                {
+                    writer.WriteLine($"{checkedOutBook.Title}|{checkedOutBook.Author}|{checkedOutBook.Status}|{checkedOutBook.DueDate}");
+                }
+                else
+                {
+                    writer.WriteLine($"{b.Title}|{b.Author}|{b.Status}");
+                }
+                
+
+            }
+            writer.Close();
             answer = false;
             break;
         } 

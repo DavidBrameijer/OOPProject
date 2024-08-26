@@ -14,7 +14,7 @@ namespace OOPProject
         public string Title { get; set; }
         public string Author { get; set; }
         public bool Status { get; set; }
-        public DateTime DueDate { get; set; }
+        
 
 
         //constructor
@@ -31,19 +31,7 @@ namespace OOPProject
         }
         public static List<Book> AllBooks = new List<Book>()
         {
-            new Book("To Kill a Mockingbird", "Harper Lee", false),
-            new Book("Pride and Prejudice", "Jane Austen", false),
-            new Book("1984", "George Orwell", false),
-            new Book("Jane Eyre", "Charlotte Bronte", false),
-            new Book("The Great Gatsby", "F. Scott Fitzgerald", false),
-            new Book("Animal Farm", "George Orwell", false),
-            new Book("The Count of Monte Cristo", "Alexandre Dumas", false),
-            new Book("The Lord of the Rings", "J.R.R. Tolkien", false),
-            new Book("Little Women", "Louisa May Alcott", false),
-            new Book("The Hobbit", "J.R.R. Tolkien", false),
-            new Book("The Picture of Dorian Gray", "Oscar Wilde", false),
-            new Book("One Hundred Years of Solitude", "Gabriel Garcia Marquez", false),
-            new CheckedOutBook("Charlotte's Web", "E.B. White", true, DateTime.Now)
+        
         };
 
         public static void ListBooks()
