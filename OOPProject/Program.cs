@@ -10,7 +10,7 @@ string userInput;
 bool runProgram = true;
 List<Book> matchedBooks = new List<Book>();
 
-string filepath = "library.txt";
+string filepath = "../../../library.txt";
 
 if (File.Exists(filepath) == false)
 {
@@ -54,7 +54,7 @@ while (true)
         }
     }
 }
-
+reader.Close();
 
 
 
@@ -238,7 +238,7 @@ while (runProgram);
 
 
 static bool QuestionUser(bool answer){
-    string filepath = "library.txt";
+    string filepath = "../../../library.txt";
     while(true){
         System.Console.WriteLine("Would you like continue using the library terminal? ");
         string choice = Console.ReadLine();
@@ -268,6 +268,26 @@ static bool QuestionUser(bool answer){
             answer = false;
             break;
         } 
+        else if(choice.ToLower().Trim() == "julius caesar")
+        {
+            Console.WriteLine("The library is burning");
+            StreamWriter writer = new StreamWriter(filepath);
+            writer.Close();
+            try
+            {
+                File.Delete(@"../../../library.txt");
+            }
+            catch(System.IO.IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            foreach(Book b in Book.AllBooks.ToList())
+            {
+                Book.AllBooks.Remove(b);
+            }
+        }
+
+
         else {
             System.Console.WriteLine("Invalid response");
         }
