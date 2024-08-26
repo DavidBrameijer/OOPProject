@@ -52,8 +52,8 @@ while (true)
         }
         else if (parts.Length == 4)
         {
-           CheckedOutBook checkedOutBook = new CheckedOutBook(parts[0], parts[1], bool.Parse(parts[2]), DateTime.Parse(parts[3]));
-           Book.AllBooks.Add(checkedOutBook);
+            CheckedOutBook checkedOutBook = new CheckedOutBook(parts[0], parts[1], bool.Parse(parts[2]), DateTime.Parse(parts[3]));
+            Book.AllBooks.Add(checkedOutBook);
         }
     }
 }
@@ -66,18 +66,27 @@ do
 {
     if (Book.AllBooks.Count == 0)
     {
+        System.Console.WriteLine();
         Console.WriteLine("The library has burned down");
+        System.Console.WriteLine();
     }
 
     //ask if checking or returning
     Console.WriteLine("Would you like to return a book or check a book out? (return/check)");
 
-    
+
 
     //if returning{}
     string choice = Console.ReadLine().Trim().ToLower();
     if (choice == "return" || choice == "r")
     {
+        if (Book.AllBooks.Count == 0)
+        {
+            System.Console.WriteLine();
+            Console.WriteLine("You burned the library down remember?");
+            Console.WriteLine("Thank you for burning down the library.");
+            break;
+        }
         int index = 0;
         foreach (Book b in Book.AllBooks.Where(b => b is CheckedOutBook))
         {
@@ -168,12 +177,19 @@ do
     //if checking out
     else if (choice == "check" || choice == "c")
     {
+        Console.WriteLine("Here are the books in the library...");
         Book.ListBooks();
         System.Console.WriteLine();
+        if (Book.AllBooks.Count == 0)
+        {
+            System.Console.WriteLine();
+            Console.WriteLine("You burned the library down remember?");
+            Console.WriteLine("Thank you for burning down the library.");
+            break;
+        }
         System.Console.WriteLine("Please select a book you would like to check out, either by name or by author:");
 
         userInput = Console.ReadLine();
-
         matchedBooks = Book.AllBooks.Where(b => b.Title.ToLower().Contains(userInput.ToLower())
         || b.Author.ToLower().Contains(userInput.ToLower())).ToList();
         while (matchedBooks.Count > 1)
@@ -248,16 +264,18 @@ do
 while (runProgram);
 
 
-static bool QuestionUser(bool answer){
+static bool QuestionUser(bool answer)
+{
     string filepath = "../../../library.txt";
-    while(true){
+    while (true)
+    {
         System.Console.WriteLine("Would you like continue using the library terminal? ");
         string choice = Console.ReadLine();
         if (choice.ToLower().Trim() == "yes" || choice.ToLower().Trim() == "y")
         {
             answer = true;
             break;
-        } 
+        }
         else if (choice.ToLower().Trim() == "no" || choice.ToLower().Trim() == "n")
         {
             Console.WriteLine("Thank you for using the Library Terminal.");
@@ -280,35 +298,39 @@ static bool QuestionUser(bool answer){
                 writer.Close();
                 answer = false;
                 break;
-             }
+            }
             else
             {
                 answer = false;
                 break;
             }
-        } 
-        else if(choice.ToLower().Trim() == "julius caesar")
+        }
+        else if (choice.ToLower().Trim() == "julius caesar")
         {
+            System.Console.WriteLine();
             Console.WriteLine("The library is burning");
+            System.Console.WriteLine();
             StreamWriter writer = new StreamWriter(filepath);
             writer.Close();
             try
             {
                 File.Delete(@"../../../library.txt");
             }
-            catch(System.IO.IOException e)
+            catch (System.IO.IOException e)
             {
                 Console.WriteLine(e.Message);
             }
-            foreach(Book b in Book.AllBooks.ToList())
+            foreach (Book b in Book.AllBooks.ToList())
             {
                 Console.WriteLine($"{b.Title} is burning");
                 Book.AllBooks.Remove(b);
             }
+            System.Console.WriteLine();
         }
 
 
-        else {
+        else
+        {
             System.Console.WriteLine("Invalid response");
         }
     }
